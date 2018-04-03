@@ -51,16 +51,50 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\cameraClicker.cs" />
      <Compile Include="Assets\Main.cs" />
-     <Compile Include="Assets\map\heghtmapGeneration\DiamondSquare.cs" />
-     <Compile Include="Assets\map\heghtmapGeneration\HeightMapGenerator.cs" />
-     <Compile Include="Assets\map\heghtmapGeneration\Noise.cs" />
-     <Compile Include="Assets\map\Map.cs" />
-     <Compile Include="Assets\map\renderers\GrayscaleRenderer.cs" />
-     <Compile Include="Assets\map\renderers\MapRenderer.cs" />
-     <Compile Include="Assets\map\renderers\SatelliteRenderer.cs" />
-     <Compile Include="Assets\myUtils\MyUtils.cs" />
+     <Compile Include="Assets\maps\climate\Wind.cs" />
+     <Compile Include="Assets\maps\common\Latitude.cs" />
+     <Compile Include="Assets\maps\common\myTerrain.cs" />
+     <Compile Include="Assets\maps\common\TerrainType.cs" />
+     <Compile Include="Assets\maps\height\generation\HeightMapGenerator.cs" />
+     <Compile Include="Assets\maps\height\generation\layer generation\HeightmapLayer.cs" />
+     <Compile Include="Assets\maps\height\generation\layer generation\ILayerGenerator.cs" />
+     <Compile Include="Assets\maps\height\generation\layer generation\LayerManager.cs" />
+     <Compile Include="Assets\maps\height\generation\layer generation\PerlinNoiseLayerGenerator.cs" />
+     <Compile Include="Assets\maps\height\generation\layer generation\VoronoiLayerGenerator.cs" />
+     <Compile Include="Assets\maps\height\generation\layer generation\WhiteNoiseLayerGenerator.cs" />
+     <Compile Include="Assets\maps\height\generation\MapAnalyzer.cs" />
+     <Compile Include="Assets\maps\height\Heightmap.cs" />
+     <Compile Include="Assets\maps\LandmassMap.cs" />
+     <Compile Include="Assets\maps\Map.cs" />
+     <Compile Include="Assets\maps\MapSerializable.cs" />
+     <Compile Include="Assets\maps\PhysicalMap.cs" />
+     <Compile Include="Assets\maps\renderers\GrayscaleRenderer.cs" />
+     <Compile Include="Assets\maps\renderers\IMapRenderer.cs" />
+     <Compile Include="Assets\maps\renderers\SatelliteRenderer.cs" />
+     <Compile Include="Assets\maps\renderers\TemperatureRenderer.cs" />
+     <Compile Include="Assets\maps\renderers\WaterRenderer.cs" />
+     <Compile Include="Assets\maps\renderers\WindDirectionRenderer.cs" />
+     <Compile Include="Assets\maps\renderers\WindSpeedRenderer.cs" />
+     <Compile Include="Assets\maps\TemperatureMap.cs" />
+     <Compile Include="Assets\maps\TerrainMap.cs" />
+     <Compile Include="Assets\maps\WaterMap.cs" />
+     <Compile Include="Assets\maps\WindMap.cs" />
+     <Compile Include="Assets\myUtils\Direction.cs" />
+     <Compile Include="Assets\myUtils\HSVColor.cs" />
+     <Compile Include="Assets\myUtils\IO\CSVFileManager.cs" />
+     <Compile Include="Assets\myUtils\math\DataProcessor.cs" />
+     <Compile Include="Assets\myUtils\math\functions\CircleAbsolute.cs" />
+     <Compile Include="Assets\myUtils\math\functions\IFunction.cs" />
+     <Compile Include="Assets\myUtils\math\functions\LineFunction.cs" />
+     <Compile Include="Assets\myUtils\math\functions\NormalFunction.cs" />
+     <Compile Include="Assets\myUtils\math\functions\ParabolaFunction.cs" />
+     <Compile Include="Assets\myUtils\math\MyMath.cs" />
+     <Compile Include="Assets\myUtils\math\Randomizer.cs" />
+     <Compile Include="Assets\myUtils\Point.cs" />
      <Compile Include="Assets\myUtils\screenshotClicker.cs" />
+     <Compile Include="Assets\test.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
