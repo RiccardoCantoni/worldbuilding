@@ -8,7 +8,7 @@ public class WaterRenderer : IMapRenderer {
 	private Color land = Color.red;
 	private Color lake = Color.green; 
 	private Color undecided = Color.yellow; 
-	private Color unknown = Color.black; 
+//	private Color unknown = Color.black; 
 
 	public TerrainMap m;
 

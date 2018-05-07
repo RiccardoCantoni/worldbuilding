@@ -72,6 +72,7 @@
      <Compile Include="Assets\maps\PhysicalMap.cs" />
      <Compile Include="Assets\maps\renderers\GrayscaleRenderer.cs" />
      <Compile Include="Assets\maps\renderers\IMapRenderer.cs" />
+     <Compile Include="Assets\maps\renderers\OverlayRenderer.cs" />
      <Compile Include="Assets\maps\renderers\SatelliteRenderer.cs" />
      <Compile Include="Assets\maps\renderers\TemperatureRenderer.cs" />
      <Compile Include="Assets\maps\renderers\WaterRenderer.cs" />
@@ -84,6 +85,7 @@
      <Compile Include="Assets\myUtils\Direction.cs" />
      <Compile Include="Assets\myUtils\HSVColor.cs" />
      <Compile Include="Assets\myUtils\IO\CSVFileManager.cs" />
+     <Compile Include="Assets\myUtils\MapIterator.cs" />
      <Compile Include="Assets\myUtils\math\DataProcessor.cs" />
      <Compile Include="Assets\myUtils\math\functions\CircleAbsolute.cs" />
      <Compile Include="Assets\myUtils\math\functions\IFunction.cs" />

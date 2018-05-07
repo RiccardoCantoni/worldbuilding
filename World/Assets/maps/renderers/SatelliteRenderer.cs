@@ -8,14 +8,21 @@ public class SatelliteRenderer : IMapRenderer {
 	public TerrainMap terrainMap;
 	public IFunction snowFunction;
 
+	public bool snow;
+
 	public SatelliteRenderer(){
 		snowFunction = new LineFunction (-10, 0.75f, -30, 1);
+		snow = false;
+	}
+
+	public SatelliteRenderer(bool snow){
+		snowFunction = new LineFunction (-10, 0.75f, -30, 1);
+		this.snow = snow;
 	}
 
 	public Color[] getColors (){
 		int xSize = terrainMap.xSize;
 		int ySize = terrainMap.ySize;
-		this.terrainMap = terrainMap;
 		Color[] pixels = new Color[xSize * ySize];
 		float seaLevel = 0.5f;
 
@@ -24,8 +31,8 @@ public class SatelliteRenderer : IMapRenderer {
 		Color dGreen = getColor (4, 58, 17);
 		Color brown = getColor (63, 56, 21);
 		Color gray = getColor (186, 186, 186);
-		Color white = getColor (198, 195, 180);
-		Color white2 = getColor (247, 248, 249);
+//		Color white = getColor (198, 195, 180);
+//		Color white2 = getColor (247, 248, 249);
 		Color dBlue = getColor (0, 8, 71);
 		Color lBlue = getColor (21, 66, 214);
 

@@ -95,9 +95,16 @@ public class Heightmap : Map<float> {
 		float totalCounted = 0;
 		for (int y = py - smoothingRadius; y <= py + smoothingRadius; y++) {
 			for (int x = px - smoothingRadius; x <= px + smoothingRadius; x++) {
-				if (y < ySize && y >= 0 && x < xSize && x >= 0) {
+				int xval = x;
+				int yval = y;
+				if (y < ySize && y >= 0) {
+					if (x < 0) {
+						xval += xSize;
+					} else if (x >= xSize) {
+						xval -= xSize;
+					}
 					totalCounted++;
-					totalValue += grid [x, y];
+					totalValue += grid [xval, yval];
 				}
 			}
 		}

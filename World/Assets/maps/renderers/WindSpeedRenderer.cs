@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WindSpeedRenderer : IMapRenderer {
 
-	WindMap m;
+	public WindMap m;
 
 	public Color[] getColors (){
 		int xSize = m.xSize;

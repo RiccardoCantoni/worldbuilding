@@ -8,9 +8,9 @@ public class HeightMapGenerator {
 
 	public Heightmap generateMap(int xSize, int ySize){
 		Heightmap map = new Heightmap (xSize, ySize, 0.5f);
-		//seed = Random.Range(int.MinValue, int.MaxValue);
+		seed = Random.Range(int.MinValue, int.MaxValue);
 		//Debug.Log (seed);
-		seed = -1949366325;
+		//seed = -1949366325;
 		map = new Heightmap (xSize, ySize, 0.5f);
 		LayerManager lm = new LayerManager (xSize, ySize, seed);
 		map.addLayer(lm.voronoiLayer(180,1.5f,1.3f,16)); //1.5 1.3

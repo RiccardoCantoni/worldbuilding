@@ -6,6 +6,7 @@ public class PhysicalMap : MonoBehaviour{
 
 	private Texture2D mapTexture;
 	private Renderer rend;
+	private int xSize, ySize;
 
 
 	public void init(int xSize, int ySize){

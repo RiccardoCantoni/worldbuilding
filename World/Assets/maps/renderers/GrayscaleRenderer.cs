@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrayscaleRenderer : IMapRenderer {
 
 	public Heightmap m;
+	public int shift;
 	
 	public Color[] getColors(){
 		int xSize = m.xSize;
@@ -13,7 +14,7 @@ public class GrayscaleRenderer : IMapRenderer {
 		for (int y = 0; y < ySize; y++) {
 			for (int x = 0; x < xSize; x++) {
 				float v = m.grid [x, y];
-				pix [y * xSize + x] = new Color (v,v,v);
+				pix [y * xSize + (x + shift)%xSize] = new Color (v,v,v);
 			}
 		}
 		return pix;

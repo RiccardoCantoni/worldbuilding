@@ -62,6 +62,13 @@ public class Direction {
 		return d;
 	}
 
+	public Direction invert(){
+		Direction d = new Direction ();
+		d.dx = this.dx * -1;
+		d.dy = this.dy * -1;
+		return d;
+	}
+
 	public static Point movePoint(Point p, Direction d){
 		return new Point (p.x + d.dx, p.y + d.dy);
 	}
@@ -73,7 +80,5 @@ public class Direction {
 		return (((Direction)obj).dx == dx && ((Direction)obj).dy == dy);
 	}
 
-	public bool Equals(Direction d){
-		return (d.dx == dx && d.dy == dy);
-	}
+	
 }
