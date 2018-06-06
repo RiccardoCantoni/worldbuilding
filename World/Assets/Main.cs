@@ -19,20 +19,18 @@ public class Main : MonoBehaviour {
 
 	void Update(){
 		if (Input.GetMouseButtonDown(0)) {
-			MapSerializable mser = MapSerializable.loadFromFile ("wm");
-			heightmap = mser.toHeightMap (0.5f);
+			MapSerializable mser = MapSerializable.loadFromFile ("testHM");
+            heightmap = new Heightmap(xSize, ySize, 0.5f, mser.grid);
 			physical.init(xSize, ySize);
 			watermap = new WaterMap (heightmap);
 			terrainmap = new TerrainMap (heightmap, watermap);
-			TemperatureMap temperatureMap = new TemperatureMap (terrainmap, 2);
-			SatelliteRenderer srend = new SatelliteRenderer ();
-			srend.temperatureMap = temperatureMap;
-			srend.terrainMap = terrainmap;
-			WindMap windmap = new WindMap (xSize, ySize);
-			windmap.tradeWindMap (terrainmap, 2);
-			WindSpeedRenderer wsr = new WindSpeedRenderer ();
-			wsr.m = windmap;
-			physical.draw (wsr);
+            mser = MapSerializable.loadFromFile("testTM");
+            TemperatureMap temperaturemap = new TemperatureMap(xSize, ySize, mser.grid, terrainmap);
+            //TemperatureMap temperaturemap = new TemperatureMap (terrainmap, 2);
+            //MapSerializable mst = new MapSerializable(xSize, ySize, temperaturemap.grid);
+
+            TemperatureRenderer tr = new TemperatureRenderer(new LandmassMap(terrainmap), temperaturemap);
+			physical.draw (tr);
 		}
 	}
 
