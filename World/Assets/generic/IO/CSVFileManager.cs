@@ -6,15 +6,16 @@ using System.IO;
 public class CSVFileManager {
 
 	private string path;
-	private bool append;
+    private bool append, overwrite;
 
 	public CSVFileManager(string path){
 		this.path = path;
 		append = false;
 	}
-	public CSVFileManager(string path, bool appendMode){
+    public CSVFileManager(string path, bool appendMode = false, bool overwriteMode = false){
 		this.path = path;
 		append = appendMode;
+        overwrite = overwriteMode;
 	}
 
 	public void writeLine(string line){
@@ -49,5 +50,22 @@ public class CSVFileManager {
 		str += values [values.Length - 1];
 		writeLine (str);
 	}
+
+    public void writeMatrix(float[,]matrix, int xSize, int ySize, char separator)
+    {
+        if (overwrite)
+            append = false;
+        string line;
+        for (int y=0; y<ySize; y++)
+        {
+            line = "";
+            for (int x=0; x<xSize; x++)
+            {
+                line += matrix[x, y].ToString() + separator;
+            }
+            writeLine(line);
+            append = true;
+        }
+    }
 
 }

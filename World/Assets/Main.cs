@@ -8,30 +8,36 @@ public class Main : MonoBehaviour {
 
 	public GameObject mapObject;
 
-	Heightmap heightmap;
-	TerrainMap terrainmap;
-	WaterMap watermap;
 	PhysicalMap physical;
+    TemperatureMap temperaturemap;
+    TemperatureRenderer tr;
+    TerrainMap terrainmap;
+
+    int loops;
 
 	void Start(){
-		physical = mapObject.GetComponent<PhysicalMap> ();
-	}
+        loops = 0;
+    }
 
 	void Update(){
-		if (Input.GetMouseButtonDown(0)) {
-			MapSerializable mser = MapSerializable.loadFromFile ("testHM");
-            heightmap = new Heightmap(xSize, ySize, 0.5f, mser.grid);
-			physical.init(xSize, ySize);
-			watermap = new WaterMap (heightmap);
-			terrainmap = new TerrainMap (heightmap, watermap);
+		if (Input.GetMouseButtonDown(0)) {           
+            physical = mapObject.GetComponent<PhysicalMap>();
+            physical.init(xSize, ySize);
+            MapSerializable mser = MapSerializable.loadFromFile ("testHM");
+            Heightmap heightmap = new Heightmap(xSize, ySize, 0.5f, mser.grid);
+            WaterMap watermap = new WaterMap (heightmap);
+            terrainmap = new TerrainMap (heightmap, watermap);
             mser = MapSerializable.loadFromFile("testTM");
-            TemperatureMap temperaturemap = new TemperatureMap(xSize, ySize, mser.grid, terrainmap);
-            //TemperatureMap temperaturemap = new TemperatureMap (terrainmap, 2);
-            //MapSerializable mst = new MapSerializable(xSize, ySize, temperaturemap.grid);
-
-            TemperatureRenderer tr = new TemperatureRenderer(new LandmassMap(terrainmap), temperaturemap);
+            temperaturemap = new TemperatureMap(xSize, ySize, mser.grid, terrainmap);
+            tr = new TemperatureRenderer(new LandmassMap(terrainmap), temperaturemap);
 			physical.draw (tr);
 		}
-	}
+        if (Input.GetMouseButtonDown(1))
+        {
+            temperaturemap.grid = DataProcessor.reduceScale(temperaturemap.grid, xSize, ySize, -60, 40, 10);
+            tr = new TemperatureRenderer(new LandmassMap(terrainmap), temperaturemap);
+            physical.draw(tr);
+        }
+    }
 
 }

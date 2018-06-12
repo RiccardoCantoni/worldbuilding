@@ -10,7 +10,7 @@ public class SatelliteRenderer : IMapRenderer {
 
 	public bool snow;
 
-	public SatelliteRenderer(TerrainMap terrainmap, TemperatureMap temperaturemap){
+    public SatelliteRenderer(TerrainMap terrainmap, TemperatureMap temperaturemap, bool snow = false){
         this.terrainmap = terrainmap;
         this.temperaturemap = temperaturemap;
 		snowFunction = new LineFunction (-10, 0.75f, -30, 1);

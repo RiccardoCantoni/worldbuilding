@@ -42,4 +42,6 @@ public class Map<T> {
     {
         grid[p.x, p.y] = value;
     }
+
+    
 }

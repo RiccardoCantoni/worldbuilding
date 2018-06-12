@@ -34,8 +34,8 @@ public class TemperatureMap : Map<float> {
 				}
 			}
 		}
-		smooth (5, 5);
-		smooth (1, 10);
+		smoothMean (5, 5);
+		smoothMean (1, 10);
 		IFunction altitudeTemperature = new LineFunction (-80, 40);
 		IFunction depthTemperature = new LineFunction (10, -5);
 		for (int x = 0; x < xSize; x++) {
@@ -62,16 +62,39 @@ public class TemperatureMap : Map<float> {
 
 	#region smoothing
 
-	public void smooth(int smoothingRadius, int counter){
+    private float smoothedMajorityValue(int px, int py)
+    {
+
+    }
+
+    private float smoothedMeanValue(int px, int py, int smoothingRadius)
+    {
+        float totalValue = 0;
+        float totalCounted = 0;
+        for (int y = py - smoothingRadius; y <= py + smoothingRadius; y++)
+        {
+            for (int x = px - smoothingRadius; x <= px + smoothingRadius; x++)
+            {
+                if (y < ySize && y >= 0 && x < xSize && x >= 0)
+                {
+                    totalCounted++;
+                    totalValue += grid[x, y];
+                }
+            }
+        }
+        return (totalValue / totalCounted);
+    }
+
+    public void smoothMean(int smoothingRadius, int counter){
 		float[,] newMatrix = new float[xSize, ySize];
 		for (int i = 0; i < counter; i++) {
 			for (int y = 0; y < ySize; y++) {
 				for (int x = 0; x < xSize; x++) {
 					if (terrainmap.grid [x, y].terrainType != TerrainType.sea) {
-						newMatrix [x, y] = smoothedValue (x, y, smoothingRadius);
+						newMatrix [x, y] = smoothedMeanValue (x, y, smoothingRadius);
 					} else {
 						//newMatrix [x, y] = grid [x, y];
-						newMatrix [x, y] = smoothedValue (x, y, smoothingRadius);
+						newMatrix [x, y] = smoothedMeanValue (x, y, smoothingRadius);
 					}
 				}
 			}
@@ -79,19 +102,7 @@ public class TemperatureMap : Map<float> {
 		this.grid = newMatrix;
 	}
 
-	private float smoothedValue(int px, int py, int smoothingRadius){
-		float totalValue = 0;
-		float totalCounted = 0;
-		for (int y = py - smoothingRadius; y <= py + smoothingRadius; y++) {
-			for (int x = px - smoothingRadius; x <= px + smoothingRadius; x++) {
-				if (y < ySize && y >= 0 && x < xSize && x >= 0) {
-					totalCounted++;
-					totalValue += grid [x, y];
-				}
-			}
-		}
-		return (totalValue / totalCounted);
-	}
+	
 
 	#endregion
 }
