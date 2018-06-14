@@ -42,7 +42,7 @@ public class DataProcessor {
         {
             for (int y = 0; y < ySize; y++)
             {
-                res[x, y] = assignToCluster(matrix[x, y], min, max, clusters);
+                 res[x, y] = assignToCluster(matrix[x, y], min, max, clusters);
             }
         }
         return res;

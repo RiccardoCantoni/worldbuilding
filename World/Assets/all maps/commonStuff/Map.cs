@@ -43,5 +43,9 @@ public class Map<T> {
         grid[p.x, p.y] = value;
     }
 
+    public void setAt(int x, int y, T value)
+    {
+        grid[x, y] = value;
+    }
     
 }

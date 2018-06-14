@@ -62,9 +62,26 @@ public class TemperatureMap : Map<float> {
 
 	#region smoothing
 
-    private float smoothedMajorityValue(int px, int py)
+    private float MajorityValue(int px, int py, int radius)
     {
+        Dictionary<float, int> dict = new Dictionary<float, int>();
+        return DataProcessor.assignToCluster(smoothedMeanValue(px, py, radius), -60, 40, 10);
+    }
 
+    public void smoothMajority(int smoothingradius, int counter)
+    {
+        float[,] newMatrix = new float[xSize, ySize];
+        for (int i = 0; i < counter; i++)
+        {
+            for (int y = 0; y < ySize; y++)
+            {
+                for (int x = 0; x < xSize; x++)
+                {
+                    newMatrix[x, y] = MajorityValue(x, y, smoothingradius);
+                }                
+            }
+        }
+        this.grid = newMatrix;
     }
 
     private float smoothedMeanValue(int px, int py, int smoothingRadius)
@@ -93,7 +110,6 @@ public class TemperatureMap : Map<float> {
 					if (terrainmap.grid [x, y].terrainType != TerrainType.sea) {
 						newMatrix [x, y] = smoothedMeanValue (x, y, smoothingRadius);
 					} else {
-						//newMatrix [x, y] = grid [x, y];
 						newMatrix [x, y] = smoothedMeanValue (x, y, smoothingRadius);
 					}
 				}

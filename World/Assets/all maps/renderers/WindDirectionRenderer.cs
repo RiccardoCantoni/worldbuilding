@@ -18,7 +18,13 @@ public class WindDirectionRenderer : IMapRenderer {
 
 		for (int y = 0; y < ySize; y++) {
 			for (int x = 0; x < xSize; x++) {
-				pixels [y * xSize + x] = directionToColor (m.grid [x, y].direction);
+                try
+                {
+                    pixels[y * xSize + x] = directionToColor(m.grid[x, y].direction);
+                }catch(System.Exception e)
+                {
+                    //Debug.Log(x + "," + y);
+                }
 			}
 		}
 		return pixels;

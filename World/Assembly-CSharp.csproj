@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\all maps\climate\RecursiveWindGenerator.cs" />
     <Compile Include="Assets\all maps\climate\TemperatureMap.cs" />
     <Compile Include="Assets\all maps\climate\Wind.cs" />
     <Compile Include="Assets\all maps\climate\WindMap.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Assets\all maps\commonStuff\Map.cs" />
     <Compile Include="Assets\all maps\commonStuff\MapIterator.cs" />
     <Compile Include="Assets\all maps\commonStuff\MapSerializable.cs" />
-    <Compile Include="Assets\all maps\FullEnumerator.cs" />
     <Compile Include="Assets\all maps\height\generation\HeightMapGenerator.cs" />
     <Compile Include="Assets\all maps\height\generation\layer generation\HeightmapLayer.cs" />
     <Compile Include="Assets\all maps\height\generation\layer generation\ILayerGenerator.cs" />
@@ -77,6 +77,7 @@
     <Compile Include="Assets\all maps\height\generation\layer generation\WhiteNoiseLayerGenerator.cs" />
     <Compile Include="Assets\all maps\height\generation\MapAnalyzer.cs" />
     <Compile Include="Assets\all maps\height\Heightmap.cs" />
+    <Compile Include="Assets\all maps\NeighbourEnumerator.cs" />
     <Compile Include="Assets\all maps\renderers\ColorMapRenderer.cs" />
     <Compile Include="Assets\all maps\renderers\GrayscaleRenderer.cs" />
     <Compile Include="Assets\all maps\renderers\IMapRenderer.cs" />

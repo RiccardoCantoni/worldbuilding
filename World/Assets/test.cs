@@ -7,8 +7,6 @@ public class test : MonoBehaviour{
 
 	void Start(){
 
-        float val = 50;
-        DataProcessor.assignToCluster(15, -70, 40, 10);
 
     }
 

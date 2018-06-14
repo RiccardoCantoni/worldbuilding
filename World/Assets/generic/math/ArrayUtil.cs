@@ -11,7 +11,7 @@ public class ArrayUtil<T> {
         for (int i=0; i<array.Length; i++)
         {
             v = comparator(array[i]);
-            if (v < minv)
+            if (v <= minv)
             {
                 minv = v;
                 mini = i;
