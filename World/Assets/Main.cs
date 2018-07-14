@@ -49,9 +49,6 @@ public class Main : MonoBehaviour {
                 WindMap wm = wgen.generateRecursiveWind();
                 WindDirectionRenderer wr = new WindDirectionRenderer(wm);
                 physical.draw(wr);
-                state++;
-            }else if (state == 1)
-            {
             }
         }
     }

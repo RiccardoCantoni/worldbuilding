@@ -173,4 +173,16 @@ public class Direction {
         }
         throw new System.Exception("invalid Direction:"+dx+","+dy);
     }
+
+    public Vector2 toVector()
+    {
+        return new Vector2(dx, dy).normalized;
+    }
+
+    public static Direction fromVector(Vector2 v)
+    {
+        v.Normalize();
+        return new Direction(Mathf.RoundToInt(v.x), Mathf.RoundToInt(v.y));
+    }
+
 }

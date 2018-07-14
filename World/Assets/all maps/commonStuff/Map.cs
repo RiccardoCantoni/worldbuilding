@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Map<T> {
-	public T[,] grid;
-	public int xSize;
-	public int ySize;
+    public T[,] grid;
+    public int xSize;
+    public int ySize;
+
+    public Map(int xSize, int ySize){
+        grid = new T[xSize, ySize];
+        this.xSize = xSize;
+        this.ySize = ySize;
+    }
+
+    public Map()
+    {
+
+    }
 
 	public bool isInMap(Point p){
 		return isInXAxis(p) && isInYAxis(p);

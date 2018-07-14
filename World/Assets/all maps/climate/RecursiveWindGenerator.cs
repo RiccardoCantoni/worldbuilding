@@ -6,51 +6,56 @@ public class RecursiveWindGenerator {
 
     int xSize, ySize;
     TemperatureMap tmap;
-    WindMap[] layers;
+    Map<Vector2>[] layers;
 
-    Direction[] dirs = new Direction[]
-        {
-            Direction.North(),
-            Direction.South(),
-            Direction.SouthEast(),
-            Direction.SouthWest(),
-            Direction.North(),
-            Direction.North(),
-            Direction.NorthEast(),
-            Direction.NorthWest(),
-            Direction.NorthWest(),
-            Direction.SouthWest(),
-            Direction.North(),
-            Direction.West(),
-            Direction.NorthEast(),
-            Direction.SouthEast(),
-            Direction.East(),
-            Direction.North()
-        };
+    int numLayers = 4;
+
+    Vector2[] vecs = new Vector2[]
+    {
+        Vector2.up,
+        Vector2.down,
+        new Vector2(1,-1),
+        new Vector2(-1,-1),
+        Vector2.up,
+        Vector2.up,
+        new Vector2(1,1),
+        new Vector2(-1,1),
+        new Vector2(-1,1),
+        new Vector2(-1,-1),
+        Vector2.up,
+        Vector2.left,
+        new Vector2(1,1),
+        new Vector2(1,-1),
+        Vector2.right,
+        Vector2.up
+    };
 
     public RecursiveWindGenerator(TemperatureMap temperaturemap)
     {
         this.tmap = temperaturemap;
         this.xSize = temperaturemap.xSize;
         this.ySize = temperaturemap.ySize;
-        this.layers = new WindMap[5];
-        for (int i=0; i<5; i++)
+        this.layers = new Map<Vector2>[numLayers];
+        for (int i=0; i<numLayers; i++)
         {
-            layers[i] = new WindMap(xSize, ySize);
+            layers[i] = new Map<Vector2>(xSize, ySize);
         }
     }
 
 
 	public WindMap generateRecursiveWind()
     {
-        generateRecursiveAux(0);
+        for (int l =0; l<numLayers; l++)
+        {
+            generateLayer(l);
+        }
         return blendLayers();
     }
 
-    private void generateRecursiveAux(int layerIndex)
+    private void generateLayer(int layerIndex)
     {
-        if (layerIndex > 4) return;
-        int size = 2 ^ (layerIndex + 1);
+        int size = (int)Mathf.Pow(2,(layerIndex + 2));
+        
         for (int x = 0; x <= xSize -size; x += size)
         {
             for (int y = 0; y <= ySize -size; y += size)
@@ -58,7 +63,6 @@ public class RecursiveWindGenerator {
                 squareStep(x, y, size-1, layerIndex);
             }
         }
-        generateRecursiveAux(layerIndex + 1);
     }
 
     private void squareStep(int px, int py, int size, int layerIndex)
@@ -73,10 +77,10 @@ public class RecursiveWindGenerator {
         int maxi = ArrayUtil<float>.argMax(NSEO, (a) => { return a; });
         float minv = ArrayUtil<float>.min(NSEO, (a) => { return a; });
         float maxv = ArrayUtil<float>.max(NSEO, (a) => { return a; });
-        setSquare(px, py, size, new Wind(squareDirection(mini, maxi), squareSpeed(minv, maxv)), layerIndex);
+        setSquare(px, py, size, squareDirection(mini, maxi)* squareSpeed(minv, maxv), layerIndex);
     }
 
-    private void setSquare(int px, int py, int size, Wind value, int layerIndex)
+    private void setSquare(int px, int py, int size, Vector2 value, int layerIndex)
     {
         for (int x = 0; x <= size; x++)
         {
@@ -89,7 +93,15 @@ public class RecursiveWindGenerator {
 
     private WindMap blendLayers()
     {
-        return layers[2];
+        WindMap m = new WindMap(xSize, ySize);
+        for (int x=0; x<xSize; x++)
+        {
+            for (int y=0; y<ySize; y++)
+            {
+                m.setAt(x, y, Wind.fromVector(meanOfLayers(x, y)));
+            }
+        }
+        return m;
     }
 
     private float lineAverage(Point p, Direction d, int length)
@@ -103,14 +115,24 @@ public class RecursiveWindGenerator {
         return tot / (float)length;
     }
 
-    private Direction squareDirection(int min, int max)
+    private Vector2 squareDirection(int min, int max)
     {
         if (min == max) throw new System.Exception("illegal argument: " + min + "," + max);
-        return dirs[min * 4 + max];
+        return vecs[min * 4 + max];
     }
 
     private float squareSpeed(float min, float max)
     {
-        return 1;
+        return max - min;
+    }
+
+    private Vector2 meanOfLayers(int x, int y)
+    {
+        Vector2 v = Vector2.zero;
+        for (int l=0; l<numLayers; l++)
+        {
+            v += layers[l].grid[x, y];
+        }
+        return (v /= numLayers);
     }
 }

@@ -12,7 +12,9 @@ public class Wind  {
 		this.speed = s;
 	}
 
-	public static Wind add(Wind w1, Wind w2){
-		return new Wind (w1.speed > w2.speed ? w1.direction : w2.direction, (w1.speed + w2.speed));
-	}
+    public static Wind fromVector(Vector2 v)
+    {
+        return new Wind(Direction.fromVector(v), v.magnitude);
+    }
+
 }

@@ -19,7 +19,7 @@ public class ArrayUtil<T> {
         }
         if (mini < 0)
         {
-            throw new System.Exception("argmin failed: array size "+array.Length);
+            throw new System.Exception("argmin failed: array size " + array.Length + "array: ");
         }
         return mini;
     }
@@ -66,5 +66,15 @@ public class ArrayUtil<T> {
             }
         }
         return maxv;
+    }
+
+    public static string stringarray(T[] array)
+    {
+        string s = "";
+        foreach (T x in array)
+        {
+            s += x.ToString() + ",";
+        }
+        return s;
     }
 }
