@@ -22,7 +22,7 @@ public class ColorScale {
     {
         if (value > maxValue  || value < minValue)
         {
-            throw new System.Exception("invalid parameters");
+            throw new System.Exception("invalid parameters: ["+min+","+max+"] "+value);
         }
         return HSVColor.lerpHue(min, max, (value - minValue) / (maxValue - minValue)).toRGB();
     }

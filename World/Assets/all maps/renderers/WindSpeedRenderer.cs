@@ -11,7 +11,7 @@ public class WindSpeedRenderer : IMapRenderer {
 
     public WindSpeedRenderer(WindMap windmap, LandmassMap landmassmap)
     {
-        scale = new ColorScale(Color.green, Color.red, 0, 1);
+        scale = new ColorScale(Color.blue, Color.red, 0, 1);
         m = windmap;
         lm = landmassmap;
     }
@@ -29,7 +29,7 @@ public class WindSpeedRenderer : IMapRenderer {
                     pixels[y * xSize + x] = Color.black;
                 }
                 else {
-                    c = MyMath.remap(m.grid[x, y].speed, 2, 10, 0, 1);
+                    c = MyMath.remap(m.grid[x, y].speed, 0, 60, 0, 1);
                     pixels[y * xSize + x] = scale.getColor(c);
                 }
 			}

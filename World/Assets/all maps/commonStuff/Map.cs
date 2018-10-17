@@ -49,6 +49,18 @@ public class Map<T> {
         }
     }
 
+    public T getAt(int x, int y)
+    {
+        try
+        {
+            return grid[x, y];
+        }
+        catch (System.IndexOutOfRangeException)
+        {
+            throw new System.IndexOutOfRangeException("map.getAt index out of bounds: " + x + "," + y);
+        }
+    }
+
     public void setAt(Point p, T value)
     {
         grid[p.x, p.y] = value;
@@ -57,6 +69,43 @@ public class Map<T> {
     public void setAt(int x, int y, T value)
     {
         grid[x, y] = value;
+    }
+
+    public void setRectAt(int x, int y, int dx, int dy, T value)
+    {
+        for (int xx =x; xx<x+dx; xx++)
+        {
+            for (int yy = y; yy < y + dy; yy++)
+            {
+                setAt(xx, yy, value);
+            }
+        }
+    }
+
+    public List<Point> wraparoundNeighbours(int x, int y)
+    {
+        List<Point> pts = new List<Point>();
+        int xi, yi;
+        for (int xx = 0; xx < 3; xx++)
+        {
+            for (int yy = 0; yy < 3; yy++)
+            {
+                if (xx == yy) continue;
+                xi = xx+x;
+                yi = yy+y;
+                if (yi < 0 || yi >= ySize) continue;
+                if (xi < 0)
+                {
+                    xi *= xSize;
+                }
+                else if (xi >= xSize)
+                {
+                    xi -= xSize;
+                }
+                pts.Add(new Point(xi, yi));
+            }
+        }
+        return pts;
     }
     
 }

@@ -7,6 +7,8 @@ public class RecursiveWindGenerator {
     int xSize, ySize;
     TemperatureMap tmap;
     Map<Vector2>[] layers;
+    float[] layerDirWeights;
+    float[] layerSpeedWeights;
 
     int numLayers = 4;
 
@@ -40,29 +42,26 @@ public class RecursiveWindGenerator {
         {
             layers[i] = new Map<Vector2>(xSize, ySize);
         }
+        this.layerDirWeights = new float[] { 6, 3, 2, 1};
     }
 
 
-	public WindMap generateRecursiveWind()
+	public Map<Vector2> generateRecursiveWind()
     {
         for (int l =0; l<numLayers; l++)
         {
-            generateLayer(l);
+
+            int size = (int)Mathf.Pow(2, (l + 2));
+            for (int x = 0; x <= xSize - size; x += size)
+            {
+                for (int y = 0; y <= ySize - size; y += size)
+                {
+                    squareStep(x, y, size-1, l);
+                }
+            }
+
         }
         return blendLayers();
-    }
-
-    private void generateLayer(int layerIndex)
-    {
-        int size = (int)Mathf.Pow(2,(layerIndex + 2));
-        
-        for (int x = 0; x <= xSize -size; x += size)
-        {
-            for (int y = 0; y <= ySize -size; y += size)
-            {
-                squareStep(x, y, size-1, layerIndex);
-            }
-        }
     }
 
     private void squareStep(int px, int py, int size, int layerIndex)
@@ -77,28 +76,24 @@ public class RecursiveWindGenerator {
         int maxi = ArrayUtil<float>.argMax(NSEO, (a) => { return a; });
         float minv = ArrayUtil<float>.min(NSEO, (a) => { return a; });
         float maxv = ArrayUtil<float>.max(NSEO, (a) => { return a; });
-        setSquare(px, py, size, squareDirection(mini, maxi)* squareSpeed(minv, maxv), layerIndex);
+        layers[layerIndex].setRectAt(px, py, size+1, size+1, squareDirection(mini, maxi) * squareSpeed(minv, maxv));
     }
 
-    private void setSquare(int px, int py, int size, Vector2 value, int layerIndex)
+    private Map<Vector2> blendLayers()
     {
-        for (int x = 0; x <= size; x++)
-        {
-            for (int y = 0; y <= size; y++)
-            {
-                layers[layerIndex].setAt(px + x, py + y, value);
-            }
-        }
-    }
-
-    private WindMap blendLayers()
-    {
-        WindMap m = new WindMap(xSize, ySize);
+        Map<Vector2> m = new Map<Vector2>(xSize, ySize);
+        IFunction redistr = new LineFunction(0, 3, 60, 1.5f);
+        Vector2 v;
+        float mag;
         for (int x=0; x<xSize; x++)
         {
             for (int y=0; y<ySize; y++)
             {
-                m.setAt(x, y, Wind.fromVector(meanOfLayers(x, y)));
+                v = LayersWeightedAverage(x, y);
+                mag = v.magnitude;
+                v.Normalize();
+                v *= mag+redistr.calculate(mag);
+                m.setAt(x, y, v);
             }
         }
         return m;
@@ -123,16 +118,18 @@ public class RecursiveWindGenerator {
 
     private float squareSpeed(float min, float max)
     {
-        return max - min;
+        return MyMath.remap(max - min,0,21,0,60);
     }
 
-    private Vector2 meanOfLayers(int x, int y)
+    private Vector2 LayersWeightedAverage(int x, int y)
     {
         Vector2 v = Vector2.zero;
+        float totWeight = 0;
         for (int l=0; l<numLayers; l++)
         {
-            v += layers[l].grid[x, y];
+            v += layers[l].grid[x, y]* layerDirWeights[l];
+            totWeight += layerDirWeights[l];
         }
-        return (v /= numLayers);
+        return (v / totWeight);
     }
 }

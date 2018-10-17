@@ -12,6 +12,7 @@ public class Main : MonoBehaviour {
     TemperatureMap temperaturemap;
     TemperatureRenderer tr;
     TerrainMap terrainmap;
+    WindMap wm;
 
     int state;
 
@@ -46,10 +47,26 @@ public class Main : MonoBehaviour {
             if (state == 0)
             {
                 RecursiveWindGenerator wgen = new RecursiveWindGenerator(temperaturemap);
-                WindMap wm = wgen.generateRecursiveWind();
-                WindDirectionRenderer wr = new WindDirectionRenderer(wm);
-                physical.draw(wr);
+                wm = new WindMap(xSize, ySize, terrainmap, temperaturemap, 3);
+               
+                WindSpeedRenderer wsr = new WindSpeedRenderer(wm, new LandmassMap(terrainmap));
+                WindDirectionRenderer wdr = new WindDirectionRenderer(wm, new LandmassMap(terrainmap));
+                
+                physical.draw(wsr);
+                state++;
             }
+            else if (state >= 1)
+            {
+                RecursiveWindGenerator wgen = new RecursiveWindGenerator(temperaturemap);
+                wm = new WindMap(xSize, ySize, terrainmap, temperaturemap, state);
+
+                WindSpeedRenderer wsr = new WindSpeedRenderer(wm, new LandmassMap(terrainmap));
+                WindDirectionRenderer wdr = new WindDirectionRenderer(wm, new LandmassMap(terrainmap));
+
+                physical.draw(wdr);
+                state++;
+            }
+
         }
     }
 

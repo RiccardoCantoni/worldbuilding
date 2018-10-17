@@ -6,8 +6,6 @@ public class DataProcessor {
 
 	public static int[] getDistribution(float[] values, float min, float max){
 		int[] counts = new int[100];
-        float scale = max - min;
-        float step = scale / 100f;
         int i, skippedH = 0, skippedL = 0;
         float n;
 		foreach (float val in values) {
@@ -59,6 +57,22 @@ public class DataProcessor {
             }
         }
         return flat;
+    }
+
+    public static void propertyCheck<T>(T[,] matrix, int xSize, int ySize, System.Func<T,bool> eval)
+    {
+        for(int x=0; x<xSize; x++)
+        {
+            for (int y = 0; y < ySize; y++)
+            {
+                if (eval(matrix[x, y]))
+                {
+                    Debug.Log("property check positive");
+                    break;
+                }
+            }
+        }
+        Debug.Log("property check negative");
     }
 
 }

@@ -5,10 +5,12 @@ using UnityEngine;
 public class WindDirectionRenderer : IMapRenderer {
 
     WindMap m;
+    LandmassMap l;
 
-    public WindDirectionRenderer(WindMap windmap)
+    public WindDirectionRenderer(WindMap windmap, LandmassMap landmassmap)
     {
         m = windmap;
+        l = landmassmap;
     }
 
 	public Color[] getColors (){
@@ -18,12 +20,13 @@ public class WindDirectionRenderer : IMapRenderer {
 
 		for (int y = 0; y < ySize; y++) {
 			for (int x = 0; x < xSize; x++) {
-                try
+                if (l.getAt(x, y) == 1)
+                {
+                    pixels[y * xSize + x] = Color.black;
+                }
+                else
                 {
                     pixels[y * xSize + x] = directionToColor(m.grid[x, y].direction);
-                }catch(System.Exception e)
-                {
-                    //Debug.Log(x + "," + y);
                 }
 			}
 		}
@@ -58,6 +61,6 @@ public class WindDirectionRenderer : IMapRenderer {
 		if (d.Equals (Direction.NorthWest())) {
 			return HSVColor.lerpHue (mag, red, 1).toRGB();
 		}
-		return Color.black;
+		return Color.white;
 	}
 }

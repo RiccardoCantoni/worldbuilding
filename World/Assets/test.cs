@@ -6,8 +6,12 @@ public class test : MonoBehaviour{
 
 
 	void Start(){
-        Vector2 v = new Vector2(-1,2);
-        Debug.Log(Direction.fromVector(v));
+        int ySize = 256;
+        for (int y=0; y<ySize; y++)
+        {
+            TradeWindGenerator.cellIndex(y, ySize, 3);
+        }
+        
 
     }
 

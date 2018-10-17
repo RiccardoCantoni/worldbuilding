@@ -8,6 +8,8 @@ public class MyMath  {
 		float oldGap = Mathf.Abs(b1 - a1);
 		float t = (x - a1) / oldGap;
 		float newGap = Mathf.Abs(b2 - a2);
-		return t * newGap + a2;
+		t = t * newGap + a2;
+        t = Mathf.Min(t, b2);
+        return Mathf.Max(t, a2);
 	}
 }

@@ -21,7 +21,6 @@ public class Point  {
         int nx = x + d.dx;
         if (nx >= xSize) nx -= xSize;
         if (nx < 0) nx += xSize;
-        if (nx < 0) Debug.Log("a");
         return new Point(nx, y + d.dy);
     }
 
